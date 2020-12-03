@@ -7,9 +7,10 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   "Controller" when {
-    val controller: Controller = Controller(Field(8))
+    val controller = Controller
     "a new Field get created" should {
       "without int" in {
+        controller.createNewField(8)
         controller.createNewField()
         controller.field.fieldSize should be(8)
       }
@@ -21,12 +22,12 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     "changing player" should {
       "from p1 to p2" in {
         controller.changePlayerTurn()
-        controller.player should be(2)
+        controller.playerState should be(PlayerState.PLAYER_2)
 
       }
       "from p2 to p1" in {
         controller.changePlayerTurn()
-        controller.player should be(1)
+        controller.playerState should be(PlayerState.PLAYER_1)
       }
     }
     "moving piece" should {
@@ -126,7 +127,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.moveFromPositionToPosition(Position(7, 4), Position(6, 3), 3, alreadyMoved = false)
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(6, 5), Position(7, 4), 1, alreadyMoved = false)
-        controller.field.matrix.cell(7,4).value should be(2)
+        controller.field.matrix.cell(7, 4).value shouldBe 2
       }
       "upgrade to king(black)" in {
         controller.createNewField(8)
@@ -150,42 +151,43 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.moveFromPositionToPosition(Position(0, 5), Position(1, 4), 1, alreadyMoved = false)
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(1, 6), Position(0, 5), 3, alreadyMoved = false)
-        controller.field.matrix.cell(0, 5).value should be(4)
+        //println("++++++++++++++++++++++++++++++++++++++++++++\n"+controller.matrixToString)
+        controller.field.matrix.cell(0, 5).value shouldBe 4
       }
       //geht noch nicht
-            "double jump with king from upper right to under left" in{
-              controller.createNewField(8)
-              controller.moveFromPositionToPosition(Position(2, 5), Position(3, 4), 1, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(5, 0), Position(4, 1), 3, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(3, 4), Position(4, 3), 1, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(6, 1), Position(5, 0), 3, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(1, 6), Position(2, 5), 1, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(5, 2), Position(3, 4) , 3, alreadyMoved = false)
-              controller.moveFromPositionToPosition(Position(3, 4), Position(1, 6), 3, alreadyMoved = true)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(1, 4), Position(2, 5) , 1, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(5, 4), Position(4, 5) , 3, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(0, 5), Position(1, 4) , 1, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(1, 6), Position(0, 5) , 3, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(2, 3), Position(3, 2) , 1, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(4, 1), Position(3, 0) , 3, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(2, 7), Position(3, 6) , 1, alreadyMoved = false)
-              controller.changePlayerTurn()
-              controller.moveFromPositionToPosition(Position(0,5), Position(2, 3) , 4, alreadyMoved = false)
-              controller.moveFromPositionToPosition(Position(2,3), Position(4, 1) , 4, alreadyMoved = true)
-              controller.field.matrix.cell(4,1).value should be(4)
-            }
+      "double jump with king from upper right to under left" in {
+        controller.createNewField(8)
+        controller.moveFromPositionToPosition(Position(2, 5), Position(3, 4), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(5, 0), Position(4, 1), 3, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(3, 4), Position(4, 3), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(6, 1), Position(5, 0), 3, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(1, 6), Position(2, 5), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(5, 2), Position(3, 4), 3, alreadyMoved = false)
+        controller.moveFromPositionToPosition(Position(3, 4), Position(1, 6), 3, alreadyMoved = true)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(1, 4), Position(2, 5), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(5, 4), Position(4, 5), 3, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(0, 5), Position(1, 4), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(1, 6), Position(0, 5), 3, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(2, 3), Position(3, 2), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(4, 1), Position(3, 0), 3, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(2, 7), Position(3, 6), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(0, 5), Position(2, 3), 4, alreadyMoved = false)
+        controller.moveFromPositionToPosition(Position(2, 3), Position(4, 1), 4, alreadyMoved = true)
+        controller.field.matrix.cell(4, 1).value should be(4)
+      }
       "move more then 1 cell with king" in {
         controller.createNewField(8)
         controller.moveFromPositionToPosition(Position(2, 5), Position(3, 4), 1, alreadyMoved = false)
@@ -212,45 +214,52 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.moveFromPositionToPosition(Position(2, 7), Position(3, 6), 1, alreadyMoved = false)
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(0, 5), Position(2, 7), 4, alreadyMoved = false)
-        println(controller.field)
-        controller.field.matrix.cell(2, 7).value should be(4)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(2, 5), Position(3, 4), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(2, 7), Position(1, 6), 4, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(3, 4), Position(4, 3), 1, alreadyMoved = false)
+        controller.changePlayerTurn()
+        controller.moveFromPositionToPosition(Position(1, 6), Position(5, 2), 4, alreadyMoved = false)
+        //println(controller.field)
+        controller.field.matrix.cell(5, 2).value should be(4)
       }
     }
     "positions in vector are" should {
       "in bounds" in {
-        controller.checkIfAllPositionsAreInBounds(Vector(Position(2, 1), Position(3, 0), Position(5, 4)),
-          controller.field) should be(true, "")
+        controller.checkIfAllPositionsAreInBounds(Vector(Position(2, 1), Position(3, 0), Position(5, 4)), controller.field) should be(true)
       }
 
       "not in bounds" in {
         controller.checkIfAllPositionsAreInBounds(Vector(Position(10, 1), Position(-2, 0), Position(5, 4)),
-          controller.field) should be(false, "The given positions are not inside the field")
+          controller.field) should be(false)
       }
     }
     "checking all cells empty" should {
       controller.createNewField()
       "empty" in {
         controller.checkIfAllCellsAreEmpty(controller.field, Vector(Position(0, 0), Position(6, 0),
-          Position(3, 1))) should be(true, "")
+          Position(3, 1))) should be(true)
       }
       "not empty" in {
         controller.checkIfAllCellsAreEmpty(controller.field, Vector(Position(1, 0), Position(2, 1),
-          Position(3, 1))) should be(false, "One destination is not empty to be able to move to this position")
+          Position(3, 1))) should be(false)
       }
     }
     "checking all cells belongs to player" should {
       "belongs to player" in {
         controller.createNewField()
-        controller.checkIfAllCellsBelongToPlayer(1, controller.field, Vector(Position(2, 1),
-          Position(1, 4))) should be(true, "")
+        controller.checkIfAllCellsBelongToPlayer(PlayerState.PLAYER_1, controller.field, Vector(Position(2, 1),
+          Position(1, 4))) should be(true)
       }
       "dont belongs to player 1" in {
-        controller.checkIfAllCellsBelongToPlayer(1, controller.field, Vector(Position(5, 0),
-          Position(5, 4))) should be(false, "Cell does not contain a stone that belongs to Player 1")
+        controller.checkIfAllCellsBelongToPlayer(PlayerState.PLAYER_1, controller.field, Vector(Position(5, 0),
+          Position(5, 4))) should be(false)
       }
       "dont belongs to player 2" in {
-        controller.checkIfAllCellsBelongToPlayer(2, controller.field, Vector(Position(2, 1),
-          Position(1, 4))) should be(false, "Cell does not contain a stone that belongs to Player 2")
+        controller.checkIfAllCellsBelongToPlayer(PlayerState.PLAYER_2, controller.field, Vector(Position(2, 1),
+          Position(1, 4))) should be(false)
       }
     }
   }

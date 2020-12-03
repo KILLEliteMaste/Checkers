@@ -10,7 +10,7 @@ class ObserverSpec extends AnyWordSpec with Matchers {
   "A Controller" when {
     "observed by observer" should {
       val field = new Field(8)
-      val controller = new Controller(field)
+      val controller = Controller
       val observer = new Observer {
         var updated: Boolean = false
         override def update():Unit = updated = true
