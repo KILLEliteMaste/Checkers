@@ -64,7 +64,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(2, 1), Position(4, 3), 1, alreadyMoved = false)
         controller.moveFromPositionToPosition(Position(4, 3), Position(6, 5), 1, alreadyMoved = true)
-        controller.field.matrix.cell(6, 5).value should be(1)
+        controller.field.matrix.cell(6, 5).get.value should be(1)
       }
 
       "double jump from under right to upper left(black)" in {
@@ -82,7 +82,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.moveFromPositionToPosition(Position(5, 4), Position(3, 2), 3, alreadyMoved = false)
         controller.moveFromPositionToPosition(Position(3, 2), Position(1, 0), 3, alreadyMoved = true)
         controller.changePlayerTurn()
-        controller.field.matrix.cell(1, 0).value should be(3)
+        controller.field.matrix.cell(1, 0).get.value should be(3)
       }
 
       "double jump from under left to upper right(black)" in {
@@ -100,7 +100,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.moveFromPositionToPosition(Position(5, 2), Position(3, 4), 3, alreadyMoved = false)
         controller.moveFromPositionToPosition(Position(3, 4), Position(1, 6), 3, alreadyMoved = true)
         controller.changePlayerTurn()
-        controller.field.matrix.cell(1, 6).value should be(3)
+        controller.field.matrix.cell(1, 6).get.value should be(3)
       }
       "upgrade to king(white)" in {
         controller.createNewField(8)
@@ -126,7 +126,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.moveFromPositionToPosition(Position(7, 4), Position(6, 3), 3, alreadyMoved = false)
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(6, 5), Position(7, 4), 1, alreadyMoved = false)
-        controller.field.matrix.cell(7, 4).value shouldBe 2
+        controller.field.matrix.cell(7, 4).get.value shouldBe 2
       }
       "upgrade to king(black)" in {
         controller.createNewField(8)

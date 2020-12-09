@@ -13,7 +13,7 @@ class CellSpec extends AnyWordSpec with Matchers {
         emptyCell.value should be(1)
       }
       "not be set" in {
-        emptyCell.isSet should be(false)
+        emptyCell.isSet should be(true)
       }
       "show unplayable mark" in {
         emptyCell.toString.matches("/s{3}")
@@ -22,13 +22,13 @@ class CellSpec extends AnyWordSpec with Matchers {
     "set to 1" should {
       val cell1 = Cell(1)
       "be WHITE" in {
-        cell1.color should be("WHITE")
+        cell1.color shouldBe WHITE
       }
     }
     "set to 3" should {
       val cell3 = Cell(3)
       "be BLACK" in {
-        cell3.color should be("BLACK")
+        cell3.color shouldBe BLACK
       }
     }
     "set to a specific value" should {
