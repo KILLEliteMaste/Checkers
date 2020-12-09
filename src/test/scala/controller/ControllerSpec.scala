@@ -33,19 +33,19 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "from 2 1 to 3 0" in {
         controller.createNewField(8)
         controller.moveFromPositionToPosition(Position(2, 1), Position(3, 0), 1, alreadyMoved = false)
-        controller.field.matrix.cell(3, 0).value should be(1)
+        controller.field.matrix.cell(3, 0).get.value should be(1)
       }
       "from 5 0 to 4 1" in {
         controller.createNewField(8)
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(5, 0), Position(4, 1), 3, alreadyMoved = false)
-        controller.field.matrix.cell(4, 1).value should be(3)
+        controller.field.matrix.cell(4, 1).get.value should be(3)
       }
 
       "from 2 3 to 3 4" in {
         controller.createNewField(8)
         controller.moveFromPositionToPosition(Position(2, 3), Position(3, 4), 1, alreadyMoved = false)
-        controller.field.matrix.cell(3, 4).value should be(1)
+        controller.field.matrix.cell(3, 4).get.value should be(1)
       }
 
       "double jump from upper left to under right(white)" in {

@@ -50,7 +50,7 @@ case class Field(fieldSize: Int) {
       output += counter + "  "
       counter = counter + 1
       for (cell <- row) {
-        output += cell
+        output += cell.getOrElse("▐   ▐")
       }
       output += "\n"
     }

@@ -13,10 +13,10 @@ class FieldSpec extends AnyWordSpec with Matchers {
     }
     "filled" in {
       val field = Field(10)
-      field.matrix.cell(0, 1).value should be(1)
-      field.matrix.cell(0, 0).value should be(0)
-      field.matrix.cell(1, 0).value should be(1)
-      field.matrix.cell(1, 1).value should be(0)
+      field.matrix.cell(0, 1).get.value should be(1)
+      field.matrix.cell(0, 0) shouldBe None
+      field.matrix.cell(1, 0).get.value should be(1)
+      field.matrix.cell(1, 1) shouldBe None
     }
   }
   "made a string" in {
@@ -40,7 +40,7 @@ class FieldSpec extends AnyWordSpec with Matchers {
       "look like" in {
         println(matrix.toString)
         matrix.toString shouldBe "Vector(Vector(▐   ▐))"
-      }
+      }*/
     }
   }
   "A big field " when {

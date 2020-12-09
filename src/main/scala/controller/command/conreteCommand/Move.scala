@@ -54,13 +54,13 @@ case class Move() extends UndoableCommand {
 
     //Will always be executed as it the least amount you want to jump
     val m1 = controller.field.matrix.toString
-    controller.moveFromPositionToPosition(origin(0), destinations(0), controller.field.matrix.cell(origin(0).x, origin(0).y).value, alreadyMoved = false)
+    controller.moveFromPositionToPosition(origin(0), destinations(0), controller.field.matrix.cell(origin(0).x, origin(0).y).map(cell => cell.value).getOrElse(0), alreadyMoved = false)
     if (m1.equals(controller.field.matrix.toString))
       return "Could not execute move"
 
     if (destinations.size != 1) {
       for (elem <- destinations.sliding(2, 1)) {
-        controller.moveFromPositionToPosition(elem(0), elem(1), controller.field.matrix.cell(elem(0).x, elem(0).y).value, alreadyMoved = true)
+        controller.moveFromPositionToPosition(elem(0), elem(1), controller.field.matrix.cell(elem(0).x, elem(0).y).map(cell => cell.value).getOrElse(0), alreadyMoved = true)
       }
     }
 
@@ -98,18 +98,18 @@ case class Move() extends UndoableCommand {
   }
 
 
-  override def undoStep(input: List[String],controller:Controller): String = {
+  override def undoStep(input: List[String], controller: Controller): String = {
 
 
     "UNDO the last move"
   }
 
-  override def redoStep(input: List[String],controller:Controller): String = {
+  override def redoStep(input: List[String], controller: Controller): String = {
     ""
 
   }
 
-  override def doStep(input: List[String],controller:Controller): String = {
+  override def doStep(input: List[String], controller: Controller): String = {
     val controllerOld = Controller()
     controllerOld.field = controller.field
     controllerOld.gameState = controller.gameState
