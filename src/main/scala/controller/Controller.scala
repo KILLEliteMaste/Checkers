@@ -141,7 +141,7 @@ case class Controller() extends Observable with Serializable {
 
   def checkIfAllCellsAreEmpty(field: Field, positions: Vector[Position]): Boolean = {
     for (elem <- positions) {
-      if (field.matrix.cell(elem.x, elem.y).value != 0) {
+      if (field.matrix.cell(elem.x, elem.y).exists(cell => cell.value != 0)) {
         statusMessage = "One destination is not empty to be able to move to this position"
         return false
       }

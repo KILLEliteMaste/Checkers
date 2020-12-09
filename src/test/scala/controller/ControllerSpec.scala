@@ -151,7 +151,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(1, 6), Position(0, 5), 3, alreadyMoved = false)
         //println("++++++++++++++++++++++++++++++++++++++++++++\n"+controller.matrixToString)
-        controller.field.matrix.cell(0, 5).value shouldBe 4
+        controller.field.matrix.cell(0, 5).get.value shouldBe 4
       }
       //geht noch nicht
       "double jump with king from upper right to under left" in {
@@ -185,7 +185,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(0, 5), Position(2, 3), 4, alreadyMoved = false)
         controller.moveFromPositionToPosition(Position(2, 3), Position(4, 1), 4, alreadyMoved = true)
-        controller.field.matrix.cell(4, 1).value should be(4)
+        controller.field.matrix.cell(4, 1).get.value should be(4)
       }
       "move more then 1 cell with king" in {
         controller.createNewField(8)
@@ -222,7 +222,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.changePlayerTurn()
         controller.moveFromPositionToPosition(Position(1, 6), Position(5, 2), 4, alreadyMoved = false)
         //println(controller.field)
-        controller.field.matrix.cell(5, 2).value should be(4)
+        controller.field.matrix.cell(5, 2).get.value should be(4)
       }
     }
     "positions in vector are" should {

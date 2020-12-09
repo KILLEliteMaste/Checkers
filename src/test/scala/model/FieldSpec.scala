@@ -48,7 +48,7 @@ class FieldSpec extends AnyWordSpec with Matchers {
       val bigField = Field(7)
       val fieldMatrix = new FieldMatrix[Cell](7, Cell(0))
       "have Cell(0)" in {
-        fieldMatrix.cell(4, 0).toString should be("▐   ▐")
+        fieldMatrix.cell(4, 0) shouldBe None
       }
     }
   }

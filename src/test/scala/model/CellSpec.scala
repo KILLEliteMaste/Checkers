@@ -39,7 +39,7 @@ class CellSpec extends AnyWordSpec with Matchers {
         nonEmptyCell.isSet should be(true)
       }
       "have no color" in {
-        nonEmptyCell.color should be("NONE")
+        nonEmptyCell.color shouldBe UNKNOWN
       }
       "show number in String" in {
         nonEmptyCell.toString.matches("▐ 5 ▐")
