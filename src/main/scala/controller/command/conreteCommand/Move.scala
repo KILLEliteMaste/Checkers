@@ -3,12 +3,14 @@ package controller.command.conreteCommand
 import controller.Controller
 import controller.command.UndoableCommand
 import model.Position
+import util.UndoManager
 
 case class Move() extends UndoableCommand {
 
-  val numberRegex = "(\\d+)"
+  val numberRegex = "(\\d{1,2})"
   val splitAtRegex = "\\s+"
   var statusMessage = ""
+  val undoManager = new UndoManager()
 
   override def handleCommand(input: List[String], controller: Controller): String = {
     //ORIGIN POSITION
@@ -25,7 +27,7 @@ case class Move() extends UndoableCommand {
     if (!checkIfAllCellsBelongToPlayer) {
       return controller.statusMessage
     }
-    statusMessage = "MOVE FROM: " + input.head + " " + input(1) + " to:"
+    statusMessage = "MOVE FROM: " + input.head + " " + input(1) + " "
 
     //DESTINATION POSITIONS
 
@@ -67,10 +69,6 @@ case class Move() extends UndoableCommand {
     statusMessage
   }
 
-  override def undo(input: List[String]): String = {
-    "UNDO the last move"
-  }
-
   def isDestinationInputValid(input: List[String]): Boolean = {
     if (input.size % 2 == 0) {
       if (allStringsMatchNumber(input))
@@ -92,10 +90,32 @@ case class Move() extends UndoableCommand {
   def allStringsMatchNumber(list: List[String]): Boolean = {
     for (elem <- list) {
       if (!elem.matches(numberRegex)) {
-        statusMessage = "One or more arguments do not match a number"
+        statusMessage = "One or more arguments do not match a number or are too long"
         return false
       }
     }
     true
+  }
+
+
+  override def undoStep(input: List[String],controller:Controller): String = {
+
+
+    "UNDO the last move"
+  }
+
+  override def redoStep(input: List[String],controller:Controller): String = {
+    ""
+
+  }
+
+  override def doStep(input: List[String],controller:Controller): String = {
+    val controllerOld = Controller()
+    controllerOld.field = controller.field
+    controllerOld.gameState = controller.gameState
+    controllerOld.playerState = controller.playerState
+    controllerOld.statusMessage = controller.statusMessage
+
+    ""
   }
 }

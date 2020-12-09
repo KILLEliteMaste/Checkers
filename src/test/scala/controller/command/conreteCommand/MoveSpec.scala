@@ -1,11 +1,11 @@
 package controller.command.conreteCommand
 
-import controller.{Controller, PlayerState}
+import controller.Controller
 import model.Position
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class MoveTest extends AnyWordSpec with Matchers {
+class MoveSpec extends AnyWordSpec with Matchers {
 
   "MoveTest" when {
     val move = Move()

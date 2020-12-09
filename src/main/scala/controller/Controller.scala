@@ -3,7 +3,7 @@ package controller
 import model.{Cell, Field, FieldMatrix, Position}
 import util.Observable
 
-case class Controller() extends Observable {
+case class Controller() extends Observable with Serializable {
   var field: Field = Field(8)
   var gameState: GameState.Value = GameState.IDLE
   var statusMessage: String = ""
